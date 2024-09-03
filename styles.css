@@ -1,157 +1,138 @@
-/* Reset default margin and padding */
-body, html {
+body {
+    background-color: #FFF9E6; 
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
-    height: 100%;
-    overflow: hidden;
-}
-
-
-
-.background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/public/newmemo.png'); /* Ensure the path is correct */
-    background-size: cover;
-    background-position: center;
-    z-index: -1;
-}
-
-/* Main Container */
-.main-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-/* Static Text Section */
-.static-text {
-    flex: 1;
-    color: #38294c;
-    padding-right: 20px;
-}
-
-.static-text h1 {
-    font-size: 55px;
-    margin-bottom: 10px;
-    font-style: italic;
-}
-
-.static-text p {
-    font-size: 28px;
-}
-
-
-
-/* Form Styles */
-.form {
-    margin-bottom: 20px;
-}
-
-.form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.form label {
-    display: block;
-    margin-bottom: 15px;
-}
-
-.form label span {
-    display: block;
-    margin-bottom: 5px;
     color: #333;
 }
 
-.form input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.container {
+    background-color: #FFF9E6; 
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 20px;
 }
 
-/* Submit Button Styles */
-.submit-btn {
+.page-border {
+    border: 3px solid #333; 
+}
+
+.header img {
     width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+}
+
+.file-folder-tabs-container {
+    margin-bottom: 20px;
+}
+
+.file-folder-tab {
     padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
+    margin: 5px;
     cursor: pointer;
-    margin-top: 20px;
-}
-
-.submit-btn:hover {
-    background-color: #0056b3;
-}
-
-/* Alternate Sign-In Section (Removed) */
-.alt-sign-in {
-    display: none; /* Hidden since social logins are removed */
-}
-
-/* Forgot Password Link */
-.forgot-pass {
+    background-color: #7D5A50; 
+    color: #FFF9E6;
+    border-radius: 5px;
     text-align: center;
-    margin-top: 10px;
 }
 
-.forgot-pass a {
-    color: #007bff;
-    text-decoration: none;
+.file-folder-tab.active {
+    background-color: #A7C7E7; 
+    color: #333;
 }
 
-.forgot-pass a:hover {
-    text-decoration: underline;
-}
-
-/* Form Switch Section */
-.form-switch {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.form-switch a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.form-switch a:hover {
-    text-decoration: underline;
-}
-
-/* Hidden Class */
-.hidden {
+.dropdown-container {
     display: none;
 }
 
-/* Form Buttons */
-.form-buttons {
-    text-align: center;
-    margin-bottom: 30px;
+.calendar-content {
+    padding: 20px;
+    background-color: #FFF9E6;
+    border-radius: 10px;
+    margin-top: 20px;
 }
 
-.form-buttons button {
-    margin: 10px;
-    padding: 10px;
-    font-size: 16px;
+.color-tags {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.color-tag {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
     cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
 }
 
-.form-buttons button:hover {
-    background-color: #0056b3;
+.color-tag.deep-blue { background-color: #003f88; }
+.color-tag.dark-purple { background-color: #4b0082; }
+.color-tag.cream { background-color: #FFF9E6; }
+
+.action-buttons button {
+    background-color: #A7C7E7;
+    border: none;
+    margin-right: 10px;
+}
+
+.action-buttons button:hover {
+    background-color: #7D5A50; 
+    color: #FFF9E6;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #FFF9E6;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #333;
+    width: 80%;
+    border-radius: 10px;
+}
+
+.modal-footer button {
+    background-color: #A7C7E7;
+    border: none;
+}
+
+.modal-footer button:hover {
+    background-color: #7D5A50;
+    color: #FFF9E6;
+}
+
+.close {
+    color: #333;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.note-card {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #FFF9E6;
+    border: 1px solid #333;
+    border-radius: 5px;
 }

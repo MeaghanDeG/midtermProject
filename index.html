@@ -1,75 +1,165 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nota Bene - Login</title>
+    <title>Nota Bene</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <div class="background-image"></div>
+    <div class="container mt-5 blurrable page-border">
+        
+        <div class="header">
+            <img src="memoBoard2.png" alt="Header Image"> <!-- Make sure this path is correct -->
+        </div>
 
-    <main class="main-container">
-        <section class="static-text">
-            <h1>Welcome to Nota Bene</h1>
-            <p>A Place for Notes</p>
-        </section>
-
-        <section class="form-section">
-            <!-- Buttons to Trigger Forms -->
-            <div class="form-buttons">
-                <button onclick="showLogin()">Login</button>
-                <button onclick="showSignUp()">Sign Up</button>
+        
+        <div class="file-folder-tabs-container">
+            <div class="file-folder-tabs">
+                <div class="file-folder-tab" onclick="openTab('groceryListForm')">Grocery List</div>
+                <div class="file-folder-tab" onclick="openTab('todoForm')">To Do List</div>
+                <div class="file-folder-tab" onclick="openTab('generalForm')">General Notes</div>
+                <div class="file-folder-tab" onclick="openTab('calendar')">Calendar</div>
+                <div class="file-folder-tab" onclick="openTab('notesView')">View Notes</div>
             </div>
+        </div>
 
-            <!-- Login Form (Hidden by default) -->
-            <form id="login-form" class="form hidden" action="/auth/login" method="POST">
-                <h2>Login</h2>
-                <label for="login-email-username">Email or Username</label>
-                <input type="text" id="login-email-username" name="emailOrUsername" placeholder="Enter your email or username" required>
-                <label for="login-password">Password</label>
-                <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
-                <button type="submit" class="submit-btn">Login</button>
-                <p class="forgot-pass">
-                    <a href="#" onclick="showForgotPassword()">Forgot password?</a>
-                </p>
+        <div id="groceryListForm" class="dropdown-container">
+            <h3>Create Grocery List</h3>
+            <form onsubmit="handleFormSubmit(event, 'grocery')">
+                <div class="mb-3">
+                    <label for="groceryListTitle" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="groceryListTitle" placeholder="Enter list title">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="groceryItemText1">Items</label>
+                    <div id="groceryItems">
+                        <div class="input-group mb-2">
+                            <div class="input-group-text">
+                                <input type="checkbox" id="groceryItem1Checkbox" onchange="strikeThrough(this, 'groceryItemText1')">
+                            </div>
+                            <input type="text" class="form-control" id="groceryItemText1" placeholder="Item 1" oninput="showNextInput(1)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-tags">
+                    <span>Tag Me!</span>
+                    <div class="color-tag deep-blue" onclick="selectTag('deep-blue')"></div>
+                    <div class="color-tag dark-purple" onclick="selectTag('dark-purple')"></div>
+                    <div class="color-tag cream" onclick="selectTag('cream')"></div>
+                </div>
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">Save My Note</button>
+                    <button type="button" class="btn btn-secondary save-to-calendar-btn" data-category="grocery">Save To My Calendar</button>
+                    <button type="button" class="btn btn-danger" onclick="discardForm()">Discard</button>
+                </div>
             </form>
+        </div>
 
-            <!-- Sign Up Form (Hidden by default) -->
-            <form id="signup-form" class="form hidden" action="/auth/signup" method="POST">
-                <h2>Create Account</h2>
-                <label for="signup-username">Username</label>
-                <input type="text" id="signup-username" name="username" placeholder="Enter your username" required>
-                <label for="signup-email">Email</label>
-                <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
-                <label for="signup-password">Password</label>
-                <input type="password" id="signup-password" name="password" placeholder="Enter your password" required>
-                <label for="signup-confirm-password">Confirm Password</label>
-                <input type="password" id="signup-confirm-password" name="confirmPassword" placeholder="Confirm your password" required>
-                <button type="submit" class="submit-btn">Sign Up</button>
+        <div id="todoForm" class="dropdown-container">
+            <h3>Create To Do List</h3>
+            <form onsubmit="handleFormSubmit(event, 'todo')">
+                <div class="mb-3">
+                    <label for="todoListTitle" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="todoListTitle" placeholder="Enter list title">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="todoItemText1">Tasks</label>
+                    <div id="todoItems">
+                        <div class="input-group mb-2">
+                            <div class="input-group-text">
+                                <input type="checkbox" id="todoItem1Checkbox" onchange="strikeThrough(this, 'todoItemText1')">
+                            </div>
+                            <input type="text" class="form-control" id="todoItemText1" placeholder="Task 1" oninput="showNextInput(1, 'todo')">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-tags">
+                    <span>Tag Me!</span>
+                    <div class="color-tag deep-blue" onclick="selectTag('deep-blue')"></div>
+                    <div class="color-tag dark-purple" onclick="selectTag('dark-purple')"></div>
+                    <div class="color-tag cream" onclick="selectTag('cream')"></div>
+                </div>
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">Save My Note</button>
+                    <button type="button" class="btn btn-secondary save-to-calendar-btn" data-category="todo">Save To My Calendar</button>
+                    <button type="button" class="btn btn-danger" onclick="discardForm()">Discard</button>
+                </div>
             </form>
+        </div>
 
-            <!-- Forgot Password Form (Hidden by default) -->
-            <form id="forgot-password-form" class="form hidden" action="/auth/forgot-password" method="POST">
-                <h2>Reset Password</h2>
-                <label for="forgot-email">Email</label>
-                <input type="email" id="forgot-email" name="email" placeholder="Enter your email" required>
-                <button type="submit" class="submit-btn">Reset Password</button>
+        <div id="generalForm" class="dropdown-container">
+            <h3>Create General Note</h3>
+            <form onsubmit="handleFormSubmit(event, 'general')">
+                <div class="mb-3">
+                    <label for="generalNoteTitle" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="generalNoteTitle" placeholder="Enter note title">
+                </div>
+                <div class="mb-3">
+                    <label for="generalNoteContent" class="form-label">Content</label>
+                    <textarea class="form-control" id="generalNoteContent" rows="4" placeholder="Enter note content"></textarea>
+                </div>
+
+                <div class="color-tags">
+                    <span>Tag Me!</span>
+                    <div class="color-tag deep-blue" onclick="selectTag('deep-blue')"></div>
+                    <div class="color-tag dark-purple" onclick="selectTag('dark-purple')"></div>
+                    <div class="color-tag cream" onclick="selectTag('cream')"></div>
+                </div>
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">Save My Note</button>
+                    <button type="button" class="btn btn-secondary save-to-calendar-btn" data-category="general">Save To My Calendar</button>
+                    <button type="button" class="btn btn-danger" onclick="discardForm()">Discard</button>
+                </div>
             </form>
+        </div>
 
-            <!-- Form Switch Links -->
-            <div class="form-switch">
-                <p id="switch-to-signup">
-                    New here? <a href="#" onclick="showSignUp()">Create Account</a>
-                </p>
-                <p id="switch-to-login" class="hidden">
-                    Already have an account? <a href="#" onclick="showLogin()">Login</a>
-                </p>
+        
+        <div id="calendar" class="dropdown-container calendar-container">
+            <h3>Calendar</h3>
+            <p>Select a date to add a short memo (150 characters or less).</p>
+            <div id="calendarContainer" class="calendar-content"></div> <!-- Calendar will be rendered here -->
+        </div>
+
+        
+        <div id="notesView" class="dropdown-container">
+            <h3>Your Notes</h3>
+            <div id="notesContainer"></div> 
+        </div>
+    </div>
+
+    
+    <div id="dateMemoModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span id="closeDateMemoModal" class="close">&times;</span>
+            <h4>Date Memo for <span id="dateMemoDate"></span></h4>
+            <textarea id="dateMemoContent" class="form-control" rows="3" maxlength="150" placeholder="Enter your memo (150 characters or less)"></textarea>
+            <div class="modal-footer">
+                <button id="saveDateMemo" class="btn btn-primary">Save Memo</button>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
-    <script src="script.js"></script>
+    
+    <div id="noteModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h4>Edit Note</h4>
+            <textarea id="noteContent" class="form-control" rows="5" placeholder="Edit your note here..."></textarea>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="saveNote()">Save</button>
+                <button class="btn btn-secondary" onclick="closeModal(false)">Don't Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
